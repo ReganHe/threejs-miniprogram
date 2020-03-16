@@ -28,20 +28,15 @@ export function renderModel(canvas, THREE) {
     scene.add(light);
     // model
     var loader = new THREE.GLTFLoader();
-    loader.load('models/RobotExpressive.glb', function (gltf) {
+    // var modelUrl = 'https://threejs.org/examples/models/gltf/RobotExpressive/RobotExpressive.glb';
+    var modelUrl = 'models/RobotExpressive.glb';
+    loader.load(modelUrl, function (gltf) {
       model = gltf.scene;
       scene.add(model);
       createGUI(model, gltf.animations)
     }, undefined, function (e) {
       console.error(e);
     });
-    // loader.load('https://threejs.org/examples/models/gltf/RobotExpressive/RobotExpressive.glb', function (gltf) {
-    //   model = gltf.scene;
-    //   scene.add(model);
-    //   createGUI(model, gltf.animations)
-    // }, undefined, function (e) {
-    //   console.error(e);
-    // });
     renderer = new THREE.WebGLRenderer({
       antialias: true,
       alpha: true
