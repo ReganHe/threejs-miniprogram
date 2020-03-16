@@ -1,19 +1,25 @@
-import { registerGLTFLoader } from '../loaders/gltf-loader'
+import {
+  registerGLTFLoader
+} from '../loaders/gltf-loader'
 
 export function renderModel(canvas, THREE) {
   registerGLTFLoader(THREE)
 
   var container, stats, clock, gui, mixer, actions, activeAction, previousAction;
   var camera, scene, renderer, model, face;
-  var api = { state: 'Walking' };
+  var api = {
+    state: 'Walking'
+  };
   init();
   animate();
+
   function init() {
     camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 0.25, 100);
-    camera.position.set(- 5, 3, 10);
+    camera.position.set(-5, 3, 10);
     camera.lookAt(new THREE.Vector3(0, 2, 0));
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xe0e0e0);
+    // scene.background = new THREE.Color(0xe0e0e0);
+    // scene.background = new THREE.Color(0xa0a0a0);
     scene.fog = new THREE.Fog(0xe0e0e0, 20, 100);
     clock = new THREE.Clock();
     // lights
@@ -24,25 +30,39 @@ export function renderModel(canvas, THREE) {
     light.position.set(0, 20, 10);
     scene.add(light);
     // ground
-    var mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry(2000, 2000), new THREE.MeshPhongMaterial({ color: 0x999999, depthWrite: false }));
-    mesh.rotation.x = - Math.PI / 2;
-    scene.add(mesh);
+    var mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry(2000, 2000), new THREE.MeshPhongMaterial({
+      color: 0x999999,
+      depthWrite: false
+    }));
+    mesh.rotation.x = -Math.PI / 2;
+    // scene.add(mesh);
     var grid = new THREE.GridHelper(200, 40, 0x000000, 0x000000);
     grid.material.opacity = 0.2;
     grid.material.transparent = true;
-    scene.add(grid);
+    // scene.add(grid);
     // model
     var loader = new THREE.GLTFLoader();
-    loader.load('https://threejs.org/examples/models/gltf/RobotExpressive/RobotExpressive.glb', function (gltf) {
+    loader.load('models/RobotExpressive.glb', function (gltf) {
       model = gltf.scene;
       scene.add(model);
       createGUI(model, gltf.animations)
     }, undefined, function (e) {
       console.error(e);
     });
-    renderer = new THREE.WebGLRenderer({ antialias: true });
+    // loader.load('https://threejs.org/examples/models/gltf/RobotExpressive/RobotExpressive.glb', function (gltf) {
+    //   model = gltf.scene;
+    //   scene.add(model);
+    //   createGUI(model, gltf.animations)
+    // }, undefined, function (e) {
+    //   console.error(e);
+    // });
+    renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true
+    });
     renderer.setPixelRatio(wx.getSystemInfoSync().pixelRatio);
     renderer.setSize(canvas.width, canvas.height);
+    renderer.setClearAlpha(0);
     renderer.gammaOutput = true;
     renderer.gammaFactor = 2.2;
   }
@@ -65,7 +85,10 @@ export function renderModel(canvas, THREE) {
     // expressions
     face = model.getObjectByName('Head_2');
     activeAction = actions['Walking'];
-    activeAction.play();
+    if (activeAction) {
+      activeAction.play();
+    }
+
   }
 
   function fadeToAction(name, duration) {
