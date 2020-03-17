@@ -1,12 +1,12 @@
 export function registerGLTFLoader(THREE) {
 
   /**
- * @author Rich Tibbett / https://github.com/richtr
- * @author mrdoob / http://mrdoob.com/
- * @author Tony Parisi / http://www.tonyparisi.com/
- * @author Takahiro / https://github.com/takahirox
- * @author Don McCurdy / https://www.donmccurdy.com
- */
+   * @author Rich Tibbett / https://github.com/richtr
+   * @author mrdoob / http://mrdoob.com/
+   * @author Tony Parisi / http://www.tonyparisi.com/
+   * @author Takahiro / https://github.com/takahirox
+   * @author Don McCurdy / https://www.donmccurdy.com
+   */
 
   THREE.GLTFLoader = (function () {
 
@@ -338,7 +338,7 @@ export function registerGLTFLoader(THREE) {
 
         case 'directional':
           lightNode = new THREE.DirectionalLight(color);
-          lightNode.target.position.set(0, 0, - 1);
+          lightNode.target.position.set(0, 0, -1);
           lightNode.add(lightNode.target);
           break;
 
@@ -356,7 +356,7 @@ export function registerGLTFLoader(THREE) {
           lightDef.spot.outerConeAngle = lightDef.spot.outerConeAngle !== undefined ? lightDef.spot.outerConeAngle : Math.PI / 4.0;
           lightNode.angle = lightDef.spot.outerConeAngle;
           lightNode.penumbra = 1.0 - lightDef.spot.innerConeAngle / lightDef.spot.outerConeAngle;
-          lightNode.target.position.set(0, 0, - 1);
+          lightNode.target.position.set(0, 0, -1);
           lightNode.add(lightNode.target);
           break;
 
@@ -431,7 +431,10 @@ export function registerGLTFLoader(THREE) {
     /* BINARY EXTENSION */
     var BINARY_EXTENSION_HEADER_MAGIC = 'glTF';
     var BINARY_EXTENSION_HEADER_LENGTH = 12;
-    var BINARY_EXTENSION_CHUNK_TYPES = { JSON: 0x4E4F534A, BIN: 0x004E4942 };
+    var BINARY_EXTENSION_CHUNK_TYPES = {
+      JSON: 0x4E4F534A,
+      BIN: 0x004E4942
+    };
 
     function GLTFBinaryExtension(data) {
 
@@ -720,15 +723,25 @@ export function registerGLTFLoader(THREE) {
           delete uniforms.roughnessMap;
           delete uniforms.metalnessMap;
 
-          uniforms.specular = { value: new THREE.Color().setHex(0x111111) };
-          uniforms.glossiness = { value: 0.5 };
-          uniforms.specularMap = { value: null };
-          uniforms.glossinessMap = { value: null };
+          uniforms.specular = {
+            value: new THREE.Color().setHex(0x111111)
+          };
+          uniforms.glossiness = {
+            value: 0.5
+          };
+          uniforms.specularMap = {
+            value: null
+          };
+          uniforms.glossinessMap = {
+            value: null
+          };
 
           materialParams.vertexShader = shader.vertexShader;
           materialParams.fragmentShader = fragmentShader;
           materialParams.uniforms = uniforms;
-          materialParams.defines = { 'STANDARD': '' }
+          materialParams.defines = {
+            'STANDARD': ''
+          }
 
           materialParams.color = new THREE.Color(1.0, 1.0, 1.0);
           materialParams.opacity = 1.0;
@@ -963,7 +976,7 @@ export function registerGLTFLoader(THREE) {
             //  WebGLRenderTargetCube will be flipped for backwards compatibility
             //  WebGLRenderTargetCube.texture will be flipped because it's a Texture and NOT a CubeTexture
             // this check must be handled differently, or removed entirely, if WebGLRenderTargetCube uses a CubeTexture in the future
-            uniforms.flipEnvMap.value = material.envMap.isCubeTexture ? - 1 : 1;
+            uniforms.flipEnvMap.value = material.envMap.isCubeTexture ? -1 : 1;
 
             uniforms.reflectivity.value = material.reflectivity;
             uniforms.refractionRatio.value = material.refractionRatio;
@@ -1063,7 +1076,7 @@ export function registerGLTFLoader(THREE) {
       var offset1 = i1 * stride3;
       var offset0 = offset1 - stride3;
 
-      var s2 = - 2 * ppp + 3 * pp;
+      var s2 = -2 * ppp + 3 * pp;
       var s3 = ppp - pp;
       var s0 = 1 - s2;
       var s1 = s3 - pp + p;
@@ -1306,9 +1319,9 @@ export function registerGLTFLoader(THREE) {
 
         if (hasMorphPosition) {
 
-          var pendingAccessor = target.POSITION !== undefined
-            ? parser.getDependency('accessor', target.POSITION)
-            : geometry.attributes.position;
+          var pendingAccessor = target.POSITION !== undefined ?
+            parser.getDependency('accessor', target.POSITION) :
+            geometry.attributes.position;
 
           pendingPositionAccessors.push(pendingAccessor);
 
@@ -1316,9 +1329,9 @@ export function registerGLTFLoader(THREE) {
 
         if (hasMorphNormal) {
 
-          var pendingAccessor = target.NORMAL !== undefined
-            ? parser.getDependency('accessor', target.NORMAL)
-            : geometry.attributes.normal;
+          var pendingAccessor = target.NORMAL !== undefined ?
+            parser.getDependency('accessor', target.NORMAL) :
+            geometry.attributes.normal;
 
           pendingNormalAccessors.push(pendingAccessor);
 
@@ -1480,9 +1493,9 @@ export function registerGLTFLoader(THREE) {
 
       if (dracoExtension) {
 
-        geometryKey = 'draco:' + dracoExtension.bufferView
-          + ':' + dracoExtension.indices
-          + ':' + createAttributesKey(dracoExtension.attributes);
+        geometryKey = 'draco:' + dracoExtension.bufferView +
+          ':' + dracoExtension.indices +
+          ':' + createAttributesKey(dracoExtension.attributes);
 
       } else {
 
@@ -1990,7 +2003,7 @@ export function registerGLTFLoader(THREE) {
         // Load binary image data from bufferView, if provided.
         sourceURI = parser.getDependency('bufferView', source.bufferView).then(function (bufferView) {
           isObjectURL = true;
-          sourceURI ='data:image/jpeg;base64,' + wx.arrayBufferToBase64(bufferView);
+          sourceURI = 'data:image/jpeg;base64,' + wx.arrayBufferToBase64(bufferView);
           return sourceURI;
         });
       }
@@ -2003,9 +2016,9 @@ export function registerGLTFLoader(THREE) {
 
         if (!loader) {
 
-          loader = textureExtensions[EXTENSIONS.MSFT_TEXTURE_DDS]
-            ? parser.extensions[EXTENSIONS.MSFT_TEXTURE_DDS].ddsLoader
-            : textureLoader;
+          loader = textureExtensions[EXTENSIONS.MSFT_TEXTURE_DDS] ?
+            parser.extensions[EXTENSIONS.MSFT_TEXTURE_DDS].ddsLoader :
+            textureLoader;
 
         }
 
@@ -2177,9 +2190,9 @@ export function registerGLTFLoader(THREE) {
 
         if (!cachedMaterial) {
 
-          cachedMaterial = material.isGLTFSpecularGlossinessMaterial
-            ? extensions[EXTENSIONS.KHR_MATERIALS_PBR_SPECULAR_GLOSSINESS].cloneMaterial(material)
-            : material.clone();
+          cachedMaterial = material.isGLTFSpecularGlossinessMaterial ?
+            extensions[EXTENSIONS.KHR_MATERIALS_PBR_SPECULAR_GLOSSINESS].cloneMaterial(material) :
+            material.clone();
 
           if (useSkinning) cachedMaterial.skinning = true;
           if (useVertexTangents) cachedMaterial.vertexTangents = true;
@@ -2428,9 +2441,9 @@ export function registerGLTFLoader(THREE) {
 
       return Promise.all(pending).then(function () {
 
-        return primitiveDef.targets !== undefined
-          ? addMorphTargets(geometry, primitiveDef.targets, parser)
-          : geometry;
+        return primitiveDef.targets !== undefined ?
+          addMorphTargets(geometry, primitiveDef.targets, parser) :
+          geometry;
 
       });
 
@@ -2494,7 +2507,10 @@ export function registerGLTFLoader(THREE) {
           }
 
           // Cache this geometry
-          cache[cacheKey] = { primitive: primitive, promise: geometryPromise };
+          cache[cacheKey] = {
+            primitive: primitive,
+            promise: geometryPromise
+          };
 
           pending.push(geometryPromise);
 
@@ -2523,9 +2539,9 @@ export function registerGLTFLoader(THREE) {
 
       for (var i = 0, il = primitives.length; i < il; i++) {
 
-        var material = primitives[i].material === undefined
-          ? createDefaultMaterial()
-          : this.getDependency('material', primitives[i].material);
+        var material = primitives[i].material === undefined ?
+          createDefaultMaterial() :
+          this.getDependency('material', primitives[i].material);
 
         pending.push(material);
 
@@ -2554,9 +2570,9 @@ export function registerGLTFLoader(THREE) {
               primitive.mode === undefined) {
 
               // .isSkinnedMesh isn't in glTF spec. See .markDefs()
-              mesh = meshDef.isSkinnedMesh === true
-                ? new THREE.SkinnedMesh(geometry, material)
-                : new THREE.Mesh(geometry, material);
+              mesh = meshDef.isSkinnedMesh === true ?
+                new THREE.SkinnedMesh(geometry, material) :
+                new THREE.Mesh(geometry, material);
 
               if (mesh.isSkinnedMesh === true && !mesh.geometry.attributes.skinWeight.normalized) {
 
@@ -2662,7 +2678,7 @@ export function registerGLTFLoader(THREE) {
 
       } else if (cameraDef.type === 'orthographic') {
 
-        camera = new THREE.OrthographicCamera(params.xmag / - 2, params.xmag / 2, params.ymag / 2, params.ymag / - 2, params.znear, params.zfar);
+        camera = new THREE.OrthographicCamera(params.xmag / -2, params.xmag / 2, params.ymag / 2, params.ymag / -2, params.znear, params.zfar);
 
       }
 
@@ -2683,7 +2699,9 @@ export function registerGLTFLoader(THREE) {
 
       var skinDef = this.json.skins[skinIndex];
 
-      var skinEntry = { joints: skinDef.joints };
+      var skinEntry = {
+        joints: skinDef.joints
+      };
 
       if (skinDef.inverseBindMatrices === undefined) {
 
@@ -2973,9 +2991,9 @@ export function registerGLTFLoader(THREE) {
 
         }
 
-        if (nodeDef.extensions
-          && nodeDef.extensions[EXTENSIONS.KHR_LIGHTS_PUNCTUAL]
-          && nodeDef.extensions[EXTENSIONS.KHR_LIGHTS_PUNCTUAL].light !== undefined) {
+        if (nodeDef.extensions &&
+          nodeDef.extensions[EXTENSIONS.KHR_LIGHTS_PUNCTUAL] &&
+          nodeDef.extensions[EXTENSIONS.KHR_LIGHTS_PUNCTUAL].light !== undefined) {
 
           pending.push(parser.getDependency('light', nodeDef.extensions[EXTENSIONS.KHR_LIGHTS_PUNCTUAL].light));
 
