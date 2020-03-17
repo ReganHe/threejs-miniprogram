@@ -1969,13 +1969,8 @@ export function registerGLTFLoader(THREE) {
       var json = this.json;
       var options = this.options;
       var textureLoader = this.textureLoader;
-
-      var URL = window.URL || window.webkitURL;
-
       var textureDef = json.textures[textureIndex];
-
       var textureExtensions = textureDef.extensions || {};
-
       var source;
 
       if (textureExtensions[EXTENSIONS.MSFT_TEXTURE_DDS]) {
@@ -1992,18 +1987,12 @@ export function registerGLTFLoader(THREE) {
       var isObjectURL = false;
 
       if (source.bufferView !== undefined) {
-
         // Load binary image data from bufferView, if provided.
-
         sourceURI = parser.getDependency('bufferView', source.bufferView).then(function (bufferView) {
-
           isObjectURL = true;
-          var blob = new Blob([bufferView], { type: source.mimeType });
-          sourceURI = URL.createObjectURL(blob);
+          sourceURI ='data:image/jpeg;base64,' + wx.arrayBufferToBase64(bufferView);
           return sourceURI;
-
         });
-
       }
 
       return Promise.resolve(sourceURI).then(function (sourceURI) {
@@ -2032,7 +2021,8 @@ export function registerGLTFLoader(THREE) {
 
         if (isObjectURL === true) {
 
-          URL.revokeObjectURL(sourceURI);
+          // URL.revokeObjectURL(sourceURI);
+          sourceURI = null;
 
         }
 
@@ -2069,7 +2059,6 @@ export function registerGLTFLoader(THREE) {
      * @return {Promise}
      */
     GLTFParser.prototype.assignTexture = function (materialParams, mapName, mapDef) {
-
       var parser = this;
 
       return this.getDependency('texture', mapDef.index).then(function (texture) {
