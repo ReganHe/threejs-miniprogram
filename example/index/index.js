@@ -4,7 +4,8 @@ import { createScopedThreejs } from 'threejs-miniprogram'
 const { renderCube } = require('../test-cases/cube')
 const { renderCubes } = require('../test-cases/cubes')
 const { renderSphere } = require('../test-cases/sphere')
-const { renderModel } = require('../test-cases/model')
+// const { renderModel } = require('../test-cases/models/robotModel')
+const { renderModel } = require('../test-cases/models/tkfModel')
 
 const app = getApp()
 

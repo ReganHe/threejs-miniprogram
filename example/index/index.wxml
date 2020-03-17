@@ -1,8 +1,8 @@
-<view style="height: 50px"></view>
+<!-- <view style="height: 50px"></view> -->
 <canvas
   type="webgl"
   id="webgl"
-  style="width: 100%; height: 450px;"
+  style="width: 100%; height: 100vh;"
 ></canvas>
 <!-- <canvas
   type="webgl"
