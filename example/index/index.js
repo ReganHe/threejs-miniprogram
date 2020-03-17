@@ -5,7 +5,10 @@ const { renderCube } = require('../test-cases/cube')
 const { renderCubes } = require('../test-cases/cubes')
 const { renderSphere } = require('../test-cases/sphere')
 // const { renderModel } = require('../test-cases/models/robotModel')
-const { renderModel } = require('../test-cases/models/tkfModel')
+// const { renderModel } = require('../test-cases/models/tkfModel')
+// const { renderModel } = require('../test-cases/models/dlamModel')
+// const { renderModel } = require('../test-cases/models/fhModel')
+const { renderModel } = require('../test-cases/models/femaleModel')
 
 const app = getApp()
 
