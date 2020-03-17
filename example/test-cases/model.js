@@ -29,7 +29,10 @@ export function renderModel(canvas, THREE) {
     // model
     var loader = new THREE.GLTFLoader();
     // var modelUrl = 'https://threejs.org/examples/models/gltf/RobotExpressive/RobotExpressive.glb';
-    var modelUrl = 'models/RobotExpressive.glb';
+    // var modelUrl = 'models/RobotExpressive.glb';
+    // var modelUrl = 'models/dlam.glb';
+    // var modelUrl = 'models/female.glb';
+    var modelUrl = 'models/tkf.glb';
     loader.load(modelUrl, function (gltf) {
       model = gltf.scene;
       scene.add(model);
@@ -66,7 +69,7 @@ export function renderModel(canvas, THREE) {
 
     // expressions
     face = model.getObjectByName('Head_2');
-    activeAction = actions['Walking'];
+    activeAction = actions['Running'];
     if (activeAction) {
       activeAction.play();
     }
